@@ -294,6 +294,4 @@ All decorative torus/orbit rings and the lower circular pedestal have been remov
 ### Popup panduan (cara memakai)
 - Saat website dibuka, muncul popup vertikal 9:16 berisi cara memakai.
 - Tutup dengan tombol MULAI, tombol ×, klik area gelap, atau `Esc`. Buka lagi dengan tombol `?` (kanan bawah) atau tombol `H`.
-#   T E R R A - G E S T U R E 
- 
- 
+#
