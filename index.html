@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070913" />
+    <title>TERRA GESTURE</title>
+  </head>
+  <body>
+    <div id="app">
+      <video id="webcam" autoplay playsinline muted></video>
+      <div class="scanlines"></div>
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Nexus Gesture home">
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>TERRA<span class="brand-accent">/</span>GESTURE</span>
+        </a>
+        <div class="top-status"><span class="status-dot"></span><span id="systemState">SYSTEM STANDBY</span></div>
+        <button id="helpBtn" class="icon-btn" title="Gesture guide" aria-label="Gesture guide">?</button>
+      </header>
+
+      <main class="layout">
+        <section class="hero">
+          <div class="eyebrow"><span class="eyebrow-line"></span> NASA EARTH PARTICLE LAB <span class="version">BUILD 02.26</span></div>
+          <h1>Explore the <span>Earth.</span></h1>
+          <p class="intro">Jelajahi Bumi berbasis citra satelit NASA, dengan cincin orbit, debu kosmik, dan kendali gerakan tangan.</p>
+
+          <div class="stage-wrap">
+            <div class="stage-grid"></div>
+            <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+            <div class="stage-label"><span>PLANET // EARTH-01</span><span id="fpsReadout">60 FPS</span></div>
+            <div id="threeMount" class="three-mount"></div>
+            <div class="stage-bottom"><span><i class="mini-dot"></i>CREATE BY BERYL DUMANAO</span><span id="gestureReadout"></span></div>
+            <div class="sr-only" id="textureSource" aria-live="polite">LOADING</div>
+            <div class="reticle reticle-left"></div><div class="reticle reticle-right"></div>
+          </div>
+
+          <div class="action-row">
+            <button id="cameraBtn" class="primary-btn"><span class="camera-icon">◎</span> CAMERA OFF <span class="btn-arrow">○</span></button>
+            <button id="resetBtn" class="secondary-btn">RESET VIEW <span>⟲</span></button>
+          </div>
+          <p class="microcopy" id="cameraMessage">Kamera hanya dipakai di browser untuk mendeteksi gestur. Izinkan akses kamera saat diminta.</p>
+        </section>
+
+        <aside class="side-panel">
+          <section class="panel camera-panel">
+            <div class="panel-heading"><span class="panel-index">01</span><h2>VISION INPUT</h2><span class="live-tag" id="visionTag">OFFLINE</span></div>
+            <div class="camera-preview">
+              <canvas id="handCanvas"></canvas>
+              <div class="camera-placeholder" id="cameraPlaceholder"><div class="camera-glyph">⌁</div><span>CAMERA FEED</span><small>Awaiting connection...</small></div>
+              <div class="camera-overlay"><span>REC <i></i></span><span id="handCount">0 HANDS</span></div>
+            </div>
+            <div class="metric-row"><span>TRACKING CONFIDENCE</span><strong id="confidenceValue">--</strong></div>
+            <div class="confidence-track"><span id="confidenceBar"></span></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading"><span class="panel-index">02</span><h2>GESTURE MATRIX</h2></div>
+            <div class="gesture-list">
+              <div class="gesture-item"><span class="gesture-symbol">✋</span><div><strong>OPEN PALM</strong><small>Aktifkan / bangunkan unit</small></div><kbd>WAKE</kbd></div>
+              <div class="gesture-item"><span class="gesture-symbol">🤏</span><div><strong>PINCH ZOOM</strong><small>Jari mendekat = zoom in, merenggang = zoom out</small></div><kbd>ZOOM</kbd></div>
+              <div class="gesture-item"><span class="gesture-symbol">↔</span><div><strong>TELUNJUK KANAN</strong><small>Geser ujung telunjuk: kiri/kanan/atas/bawah</small></div><kbd>ROTATE</kbd></div>
+              <div class="gesture-item"><span class="gesture-symbol">✊</span><div><strong>FIST</strong><small>Aktifkan mode energi</small></div><kbd>ENERGY</kbd></div>
+            </div>
+          </section>
+
+          <section class="panel telemetry-panel">
+            <div class="panel-heading"><span class="panel-index">03</span><h2>PLANET TELEMETRY</h2><span class="telemetry-live">● LIVE</span></div>
+            <div class="telemetry-grid">
+              <div class="telemetry-cell"><span>ROTATION X</span><strong id="rotX">000°</strong></div>
+              <div class="telemetry-cell"><span>ROTATION Y</span><strong id="rotY">000°</strong></div>
+              <div class="telemetry-cell"><span>CORE POWER</span><strong id="corePower">78<span>%</span></strong></div>
+              <div class="telemetry-cell"><span>UNIT STATUS</span><strong class="cyan-text" id="unitStatus">IDLE</strong></div>
+            </div>
+          </section>
+          <div class="footer-note"><span>NX LABS © 2026</span><span>MADE FOR HUMAN INTERACTION</span></div>
+        </aside>
+      </main>
+
+      <div id="helpModal" class="modal-backdrop" hidden>
+        <section class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+          <div class="eyebrow">QUICK PROTOCOL</div>
+          <h2 id="helpTitle">Earth gesture controls</h2>
+          <p>Aktifkan kamera, lalu posisikan satu tangan di depan webcam dengan pencahayaan yang cukup.</p>
+          <ul>
+            <li><b>Telapak terbuka:</b> memutar Bumi dan aktifkan tracking.</li>
+            <li><b>Telunjuk tangan kanan:</b> luruskan telunjuk (jari lain tertekuk), lalu geser ke kiri/kanan/atas/bawah untuk memutar Bumi. Berhenti bergerak = Bumi berhenti.</li>
+            <li><b>Ibu jari + telunjuk mendekat:</b> zoom in (Bumi membesar). <b>Merenggang:</b> zoom out (Bumi mengecil). Zoom kontinu mengikuti gerakan jari.</li>
+            <li><b>Kepalkan tangan:</b> nyalakan efek energi di sekitar Bumi.</li>
+          </ul>
+          <p class="modal-foot">Tidak ingin menggunakan kamera? Kamu tetap bisa menggeser mouse di area hologram untuk memutar Bumi.</p>
+        </section>
+      </div>
+    </div>
+    <canvas id="gestureVisualCanvas" aria-hidden="true"></canvas>
+    <button id="guideBtn" class="guide-fab" aria-label="Panduan penggunaan" title="Panduan (H)">?</button>
+    <div id="guideModal" class="guide-backdrop" hidden>
+      <section class="guide-card" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+        <div class="guide-inner">
+        <div class="guide-eyebrow">TERRA GESTURE</div>
+        <h2 id="guideTitle">Cara memakai</h2>
+        <ol class="guide-steps">
+          <li><span class="gn">1</span><div><b>Izinkan kamera</b><p>Kamera menyala otomatis. Klik <em>Allow</em> saat browser meminta izin. Latar tetap hitam, hanya kerangka tangan yang tampil.</p></div></li>
+          <li><span class="gn">2</span><div><b>Putar Bumi</b><p>Luruskan <em>telunjuk kanan</em>, tekuk jari lain, arahkan ke Bumi lalu geser ke kiri, kanan, atas, atau bawah.</p></div></li>
+          <li><span class="gn">3</span><div><b>Zoom</b><p>Gerakkan <em>ibu jari dan telunjuk</em> bersamaan. Merenggang: Bumi membesar. Mendekat: Bumi mengecil. Tahan posisi untuk zoom terus.</p></div></li>
+          <li><span class="gn">4</span><div><b>Kunci zoom</b><p>Tunjukkan <em>telunjuk tangan kiri</em> saja agar zoom terkunci. Turunkan untuk membuka kunci.</p></div></li>
+          <li><span class="gn">5</span><div><b>Tombol kamera</b><p>Kiri bawah: <em>CAMERA ON</em> menampilkan gambar kamera, <em>CAMERA OFF</em> kembali ke latar hitam. Tracking tetap jalan.</p></div></li>
+          <li><span class="gn">6</span><div><b>Pintasan</b><p><kbd>R</kbd> reset tampilan &middot; <kbd>N</kbd> label negara &middot; <kbd>H</kbd> panduan ini. Tanpa kamera: seret mouse untuk memutar, scroll untuk zoom.</p></div></li>
+        </ol>
+        <p class="guide-tip">Ruangan gelap? Mode cahaya rendah aktif otomatis. Arahkan sedikit cahaya ke tangan agar lebih stabil.</p>
+        <button id="guideStart" class="guide-start">MULAI</button>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
